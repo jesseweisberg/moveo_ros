@@ -4,6 +4,8 @@ ROS packages that can be used to plan and execute motion trajectories for the BC
 ## How to Use:
 
 ### Getting the BCN3D Simulation Working with Motion Planning
+![moveit_screenshot.png]({{site.baseurl}}/moveit_screenshot.png)
+
 1) Make sure you have ROS installed correctly with a functioning workspace-- I used ROS Kinetic on Ubuntu 16.04 (if you have a different distro, you may need to change some things).  I currently have 'moveo_ros' in the 'src' folder of my catkin workspace.
 
 2) To plan and execute trajectories for the Moveo in simulation (RVIZ with Moveit plugin), execute the following terminal command: roslaunch moveo_moveit_config demo.launch
