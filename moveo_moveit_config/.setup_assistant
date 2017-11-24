@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: moveo_urdf
+    relative_path: urdf/moveo_urdf.urdf
+  SRDF:
+    relative_path: config/moveo_urdf.srdf
+  CONFIG:
+    author_name: Jesse Weisberg
+    author_email: jesse.weisberg@gmail.com
+    generated_timestamp: 1510359526

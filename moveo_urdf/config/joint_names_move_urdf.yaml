@@ -1,0 +1,1 @@
+controller_joint_names: ['Joint_1', 'Joint_2', 'Joint_3', 'Joint_4', 'Joint_5', 'Gripper_Servo_Gear_Joint', 'Gripper_Idol_Gear_Joint', 'Pivot_Arm_Gripper_Servo_Joint', 'Pivot_Arm_Gripper_Idol_Joint', ]

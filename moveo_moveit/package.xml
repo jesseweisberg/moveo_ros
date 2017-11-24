@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<package>
+  <name>moveo_moveit</name>
+  <version>0.0.0</version>
+  <description>The moveo_moveit package</description>
+
+  <maintainer email="jesse.weisberg@gmail.com">Jesse Weisberg</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+
+
+  <!-- <url type="website">http://wiki.ros.org/carmen_move</url> -->
+  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+
+
+  <!-- The *_depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+  <!-- Examples: -->
+  
+  <!-- Use buildtool_depend for build tool packages: -->
+  <!--   <buildtool_depend>catkin</buildtool_depend> -->
+
+  <!-- Use test_depend for packages you need only for testing: -->
+  <!--   <test_depend>gtest</test_depend> -->
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>message_generation</build_depend>
+  <build_depend>pluginlib</build_depend>
+  <build_depend>eigen</build_depend>
+  <build_depend>moveit_core</build_depend>
+  <build_depend>moveit_ros_planning_interface</build_depend>
+  <build_depend>moveit_ros_perception</build_depend>
+  <build_depend>interactive_markers</build_depend>
+  <build_depend>geometric_shapes</build_depend>
+  <build_depend>moveit_visual_tools</build_depend>
+
+  <run_depend>pluginlib</run_depend>
+  <run_depend>moveit_core</run_depend>
+  <run_depend>moveit_fake_controller_manager</run_depend>
+  <run_depend>moveit_ros_planning_interface</run_depend>
+  <run_depend>moveit_ros_perception</run_depend>
+  <run_depend>interactive_markers</run_depend>
+  <run_depend>moveit_visual_tools</run_depend>
+
+
+<!--  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>moveit_ros_planning_interface</build_depend>
+  <build_depend>moveit_core</build_depend>
+
+  <run_depend>message_generation</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>moveit_core</run_depend>
+  <run_depend>moveit_ros_planning_interface</run_depend>
+  <run_depend>interactive_markers</run_depend>
+-->
+
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

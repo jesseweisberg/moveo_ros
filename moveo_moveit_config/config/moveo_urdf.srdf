@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="moveo_urdf">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="arm">
+        <chain base_link="base_link" tip_link="Link_5" />
+    </group>
+    <group name="gripper">
+        <link name="Gripper_Idol_Gear" />
+        <link name="Tip_Gripper_Idol" />
+        <link name="Gripper_Servo_Gear" />
+        <link name="Tip_Gripper_Servo" />
+        <link name="Pivot_Arm_Gripper_Idol" />
+        <link name="Pivot_Arm_Gripper_Servo" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="Upright" group="arm">
+        <joint name="Joint_1" value="0" />
+        <joint name="Joint_2" value="0.6386" />
+        <joint name="Joint_3" value="0.5523" />
+        <joint name="Joint_4" value="-0.4143" />
+        <joint name="Joint_5" value="0.9148" />
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="gripper_ee" parent_link="Link_5" group="gripper" />
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="base_odom" type="planar" parent_frame="odom" child_link="base_link" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="Gripper_Idol_Gear" link2="Gripper_Servo_Gear" reason="Never" />
+    <disable_collisions link1="Gripper_Idol_Gear" link2="Link_2" reason="Never" />
+    <disable_collisions link1="Gripper_Idol_Gear" link2="Link_3" reason="Never" />
+    <disable_collisions link1="Gripper_Idol_Gear" link2="Link_4" reason="Never" />
+    <disable_collisions link1="Gripper_Idol_Gear" link2="Link_5" reason="Adjacent" />
+    <disable_collisions link1="Gripper_Idol_Gear" link2="Pivot_Arm_Gripper_Servo" reason="Never" />
+    <disable_collisions link1="Gripper_Idol_Gear" link2="Tip_Gripper_Idol" reason="Adjacent" />
+    <disable_collisions link1="Gripper_Idol_Gear" link2="Tip_Gripper_Servo" reason="Never" />
+    <disable_collisions link1="Gripper_Servo_Gear" link2="Link_2" reason="Never" />
+    <disable_collisions link1="Gripper_Servo_Gear" link2="Link_3" reason="Never" />
+    <disable_collisions link1="Gripper_Servo_Gear" link2="Link_4" reason="Never" />
+    <disable_collisions link1="Gripper_Servo_Gear" link2="Link_5" reason="Adjacent" />
+    <disable_collisions link1="Gripper_Servo_Gear" link2="Pivot_Arm_Gripper_Idol" reason="Never" />
+    <disable_collisions link1="Gripper_Servo_Gear" link2="Tip_Gripper_Idol" reason="Never" />
+    <disable_collisions link1="Gripper_Servo_Gear" link2="Tip_Gripper_Servo" reason="Adjacent" />
+    <disable_collisions link1="Link_1" link2="Link_2" reason="Adjacent" />
+    <disable_collisions link1="Link_1" link2="base_link" reason="Adjacent" />
+    <disable_collisions link1="Link_2" link2="Link_3" reason="Adjacent" />
+    <disable_collisions link1="Link_2" link2="Link_4" reason="Never" />
+    <disable_collisions link1="Link_2" link2="Link_5" reason="Never" />
+    <disable_collisions link1="Link_2" link2="Pivot_Arm_Gripper_Idol" reason="Never" />
+    <disable_collisions link1="Link_2" link2="Pivot_Arm_Gripper_Servo" reason="Never" />
+    <disable_collisions link1="Link_3" link2="Link_4" reason="Adjacent" />
+    <disable_collisions link1="Link_3" link2="Link_5" reason="Never" />
+    <disable_collisions link1="Link_3" link2="Pivot_Arm_Gripper_Idol" reason="Never" />
+    <disable_collisions link1="Link_3" link2="Pivot_Arm_Gripper_Servo" reason="Never" />
+    <disable_collisions link1="Link_3" link2="Tip_Gripper_Idol" reason="Never" />
+    <disable_collisions link1="Link_3" link2="Tip_Gripper_Servo" reason="Never" />
+    <disable_collisions link1="Link_4" link2="Link_5" reason="Adjacent" />
+    <disable_collisions link1="Link_4" link2="Pivot_Arm_Gripper_Idol" reason="Never" />
+    <disable_collisions link1="Link_4" link2="Pivot_Arm_Gripper_Servo" reason="Never" />
+    <disable_collisions link1="Link_4" link2="Tip_Gripper_Idol" reason="Never" />
+    <disable_collisions link1="Link_4" link2="Tip_Gripper_Servo" reason="Never" />
+    <disable_collisions link1="Link_5" link2="Pivot_Arm_Gripper_Idol" reason="Adjacent" />
+    <disable_collisions link1="Link_5" link2="Pivot_Arm_Gripper_Servo" reason="Adjacent" />
+    <disable_collisions link1="Link_5" link2="Tip_Gripper_Idol" reason="Never" />
+    <disable_collisions link1="Link_5" link2="Tip_Gripper_Servo" reason="Never" />
+    <disable_collisions link1="Pivot_Arm_Gripper_Idol" link2="Pivot_Arm_Gripper_Servo" reason="Never" />
+    <disable_collisions link1="Pivot_Arm_Gripper_Idol" link2="Tip_Gripper_Idol" reason="Default" />
+    <disable_collisions link1="Pivot_Arm_Gripper_Idol" link2="Tip_Gripper_Servo" reason="Never" />
+    <disable_collisions link1="Pivot_Arm_Gripper_Servo" link2="Tip_Gripper_Idol" reason="Never" />
+    <disable_collisions link1="Pivot_Arm_Gripper_Servo" link2="Tip_Gripper_Servo" reason="Default" />
+    <disable_collisions link1="Tip_Gripper_Idol" link2="Tip_Gripper_Servo" reason="Never" />
+</robot>
