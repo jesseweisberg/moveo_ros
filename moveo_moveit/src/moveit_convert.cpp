@@ -1,10 +1,10 @@
 #include "ros/ros.h"
 #include "sensor_msgs/JointState.h"
-#include "carmen_move/ArmJointState.h"
+#include "moveo_moveit/ArmJointState.h"
 #include "math.h"
 
-carmen_move::ArmJointState arm_steps;
-carmen_move::ArmJointState total;
+moveo_moveit::ArmJointState arm_steps;
+moveo_moveit::ArmJointState total;
 int stepsPerRevolution[6] = {32800,18000,72000,3280,14400,0};  // microsteps/revolution (using 16ths) from observation, for each motor
 int joint_status = 0;
 double cur_angle[6];
@@ -45,7 +45,7 @@ void cmd_cb(const sensor_msgs::JointState& cmd_arm)
 
   // ros::NodeHandle nh;
   // ros::Subscriber sub = nh.subscribe("/move_group/fake_controller_joint_states",1000,cmd_cb);
-  // ros::Publisher pub = nh.advertise<carmen_move::ArmJointState>("joint_steps",50);
+  // ros::Publisher pub = nh.advertise<moveo_moveit::ArmJointState>("joint_steps",50);
   ROS_INFO_STREAM("Received /move_group/fake_controller_joint_states");
     
   // arm_steps.position1 = (cmd_arm.position[0]*stepsPerRevolution[0]/M_PI+0.5)-prev_angle[0];
@@ -101,11 +101,11 @@ void cmd_cb(const sensor_msgs::JointState& cmd_arm)
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "carmen_move");
+  ros::init(argc, argv, "moveo_moveit");
   ros::NodeHandle nh;
   ROS_INFO_STREAM("In main function");
   ros::Subscriber sub = nh.subscribe("/move_group/fake_controller_joint_states",1000,cmd_cb);
-  ros::Publisher pub = nh.advertise<carmen_move::ArmJointState>("joint_steps",50);
+  ros::Publisher pub = nh.advertise<moveo_moveit::ArmJointState>("joint_steps",50);
   
   ros::Rate loop_rate(20);
 

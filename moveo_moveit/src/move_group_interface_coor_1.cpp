@@ -35,7 +35,8 @@ int main(int argc, char **argv)
   
   move_group.setEndEffectorLink("Link_5");
   geometry_msgs::PoseStamped current_pose = move_group.getCurrentPose();
-  // //We acn print the name of the reference frame for this robot.
+  // We can print the name of the reference frame for this robot.
+  // also printing the current position and orientation of the robot.
   ros::Publisher pose_pub = node_handle.advertise<geometry_msgs::PoseStamped>("robot_pose", 10);
   ROS_INFO_NAMED("moveo", "x position: %f", current_pose.pose.position.x);
   ROS_INFO_NAMED("moveo", "y position: %f", current_pose.pose.position.y);
@@ -71,7 +72,7 @@ int main(int argc, char **argv)
   //Getting Basic Information
   //-----------------------------
 
-  // We caMon print the name of the reference frame for this robot.
+  // We can print the name of the reference frame for this robot.
   ROS_INFO_NAMED("moveo", "Reference frame: %s", move_group.getPlanningFrame().c_str());
 
   // We can also print the name of the end-effector link for this group.
@@ -82,6 +83,7 @@ int main(int argc, char **argv)
   //-----------------------------
 
   //Plan a motion for this group to a desired pose for end-effector
+  // hardcode desired position here before running node in a separate terminal
   geometry_msgs::Pose target_pose1;
   //default pose
   target_pose1.position.x = 0.120679;

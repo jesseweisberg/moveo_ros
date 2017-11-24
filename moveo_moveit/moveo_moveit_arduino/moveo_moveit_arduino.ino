@@ -1,4 +1,3 @@
-
 /* Purpose: This sketch uses ROS as well as MultiStepper, AccelStepper, and Servo libraries to control the 
  * BCN3D Moveo robotic arm. In this setup, a Ramps 1.4 shield is used on top of an Arduino Mega 2560.  
  * Subscribing to the following ROS topics: 1) joint_steps, 2) gripper_angle
@@ -12,15 +11,13 @@
  *       
  * Author: Jesse Weisberg
  */
-
-
 #if (ARDUINO >= 100)
   #include <Arduino.h>
 #else
   #include <WProgram.h>
 #endif
 #include <ros.h>
-#include <carmen_move/ArmJointState.h>
+#include <moveo_moveit/ArmJointState.h>
 #include <Servo.h> 
 #include <std_msgs/Bool.h>
 #include <std_msgs/String.h>
@@ -79,7 +76,7 @@ std_msgs::Int16 msg;
 //instantiate publisher (for debugging purposes)
 ros::Publisher steps("joint_steps_feedback",&msg);
 
-void arm_cb(const carmen_move::ArmJointState& arm_steps){
+void arm_cb(const moveo_moveit::ArmJointState& arm_steps){
   joint_status = 1; //
   joint_step[0] = arm_steps.position1;
   joint_step[1] = arm_steps.position2;
@@ -95,7 +92,7 @@ void gripper_cb( const std_msgs::UInt16& cmd_msg){
 }
 
 //instantiate subscribers
-ros::Subscriber<carmen_move::ArmJointState> arm_sub("joint_steps",arm_cb); //subscribes to joint_steps on arm
+ros::Subscriber<moveo_moveit::ArmJointState> arm_sub("joint_steps",arm_cb); //subscribes to joint_steps on arm
 ros::Subscriber<std_msgs::UInt16> gripper_sub("gripper_angle", gripper_cb); //subscribes to gripper position
 
 void setup() {
