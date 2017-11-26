@@ -1,6 +1,8 @@
 # moveo_ros
 ROS packages that can be used to plan and execute motion trajectories for the BCN3D Moveo robotic arm in simulation and real-life.  
 
+- [Video Demo Here!](https://youtu.be/2RcTTqs17O8)
+
 ## How to Use:
 
 ### Getting the BCN3D Simulation Working with Motion Planning
@@ -24,9 +26,9 @@ ROS packages that can be used to plan and execute motion trajectories for the BC
 6. In 'moveit_convert.cpp' replace the stepsPerRevolution array with the steps/revolution (or microsteps/revolution) of each of your motors.  (Note: if you don't already know these values, you can experimentally get how many microsteps/revolution your motors have using the MultiStepperTest.ino and recording/eyeballing the results)
 
 7. With the simulation already running, execute each of the following commands in it's own, separate terminal: 
-	- ``` rosrun rosserial\_python serial\_node.py /dev/ttyUSB0 ```(establishes rosserial node that communicates with Arduino)
-	- ```rosrun moveo\_moveit moveit\_convert ``` (converts simulation joint_state rotations to steps and publishes on the /joint_steps topic, which the Arduino script subscribes to)
-	- ```rostopic pub gripper\_angle std\_msgs/UInt16 <angle 0-180> ```(publishes gripper_angle)
+	- ``` rosrun rosserial_python serial_node.py /dev/ttyUSB0 ```(establishes rosserial node that communicates with Arduino)
+	- ```rosrun moveo_moveit moveit_convert ``` (converts simulation joint_state rotations to steps and publishes on the /joint_steps topic, which the Arduino script subscribes to)
+	- ```rostopic pub gripper_angle std_msgs/UInt16 <angle 0-180> ```(publishes gripper_angle)
 
 **Now, whatever trajectories are planned and executed in simulation are echoed on the real robot.**
 
