@@ -49,3 +49,8 @@ Configuration for moveit, a motion planning framework that has a plugin in RVIZ,
 	- **/joint\_steps**: steps necessary to move each motor to desired position
 	- **/joint\_steps\_feedback**: same as /joint_steps, except published back by arduino to check that information is being received by Arduino correctly 
 	- **/gripper\_angle**: current angle of the gripper
+
+- **Use ```rostopic list``` and search for these topics to check if they are currently running**
+
+- **Use ```rostopic echo /<topic>``` to view the data on \<topic> in your terminal** 
+	
