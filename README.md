@@ -9,7 +9,9 @@ ROS packages that can be used to plan and execute motion trajectories for the BC
 1. Make sure you have ROS installed correctly with a functioning workspace-- I used ROS Kinetic on Ubuntu 16.04 (if you have a different distro, you may need to change some things).  I currently have 'moveo_ros' in the 'src' folder of my catkin workspace.
 
 2. To plan and execute trajectories for the Moveo in simulation (RVIZ with Moveit plugin), execute the following terminal command:
-- **_$ roslaunch moveo_moveit_config demo.launch_**
+	```
+	roslaunch moveo_moveit_config demo.launch
+	```
 
 3. Once the window loads, in the bottom-left corner check "Allow Approximate IK Solutions."  Then click on the "Planning" tab in the MotionPlanning panel of RVIZ.  Select a new goal state by either dragging the interactive marker (light blue ball on the end effector) or under "Select Goal State."  Once goal state is updated, "Plan and Execute" will plan and execute the trajectory from the start state to the updated goal state.
 
@@ -22,11 +24,9 @@ ROS packages that can be used to plan and execute motion trajectories for the BC
 6. In 'moveit_convert.cpp' replace the stepsPerRevolution array with the steps/revolution (or microsteps/revolution) of each of your motors.  (Note: if you don't already know these values, you can experimentally get how many microsteps/revolution your motors have using the MultiStepperTest.ino and recording/eyeballing the results)
 
 7. With the simulation already running, execute each of the following commands in it's own, separate terminal: 
-- **_$ rosrun rosserial\_python serial\_node.py /dev/ttyUSB0_**       (establishes rosserial node that communicates with Arduino)
-
-- **_$ rosrun moveo\_moveit moveit\_convert_**                        (converts simulation joint_state rotations to steps and publishes on the /joint_steps topic, which the Arduino script subscribes to)
-
-- **_$ rostopic pub gripper\_angle std\_msgs/UInt16 <angle 0-180>_**                 (publishes gripper_angle to BCN3D Moveo)
+	- ``` rosrun rosserial\_python serial\_node.py /dev/ttyUSB0 ```(establishes rosserial node that communicates with Arduino)
+	- ```rosrun moveo\_moveit moveit\_convert ``` (converts simulation joint_state rotations to steps and publishes on the /joint_steps topic, which the Arduino script subscribes to)
+	- ```rostopic pub gripper\_angle std\_msgs/UInt16 <angle 0-180> ```(publishes gripper_angle)
 
 **Now, whatever trajectories are planned and executed in simulation are echoed on the real robot.**
 
@@ -44,6 +44,6 @@ Configuration for moveit, a motion planning framework that has a plugin in RVIZ,
 
 ## Troubleshooting
 - After step 7, there should be 3 new topics created: 
-	-**/joint\_steps**: steps necessary to move each motor to desired position
-    -**/joint\_steps\_feedback**: same as /joint_steps, except published back by arduino to check that information is being received by Arduino correctly 
-    -**/gripper\_angle**: current angle of the gripper
+	- **/joint\_steps**: steps necessary to move each motor to desired position
+	- **/joint\_steps\_feedback**: same as /joint_steps, except published back by arduino to check that information is being received by Arduino correctly 
+	- **/gripper\_angle**: current angle of the gripper
