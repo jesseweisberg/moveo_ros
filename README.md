@@ -54,3 +54,5 @@ Configuration for moveit, a motion planning framework that has a plugin in RVIZ,
 
 - **Use ```rostopic echo /<topic>``` to view the data on \<topic> in your terminal** 
 	
+- Here is my current layout and wiring schematic for reference:
+![aerialRobotSketch.pdf](/aerial_robot_sketch.png)
