@@ -19,7 +19,8 @@ ROS packages that can be used to plan and execute motion trajectories for the BC
 
 
 ### Moving the real robot, synced with the simulated robot's trajectories.
-4. Make sure you download the AccelStepper ([AccelStepper Library Download](http://www.airspayce.com/mikem/arduino/AccelStepper/AccelStepper-1.57.zip)) and ros_lib ([rosserial-arduino tutorial](http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup)) libraries into your Arduino environment 
+4. Make sure you download the AccelStepper ([AccelStepper Library Download](http://www.airspayce.com/mikem/arduino/AccelStepper/AccelStepper-1.57.zip)) and ros_lib ([rosserial-arduino tutorial](http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup)) libraries into your Arduino environment.
+	- If ros_lib already exists in your Arduino libraries (<Arduino sketchbook>/libraries), follow the last troubleshooting tip or you'll get an error saying "ArmJointState.h: no such file".  ROS makes you remove ros_lib and regenerate it every time you introduce a new custom message.
 
 5. Change the pin layout between your robot and the RAMPS 1.4 in **'moveo_moveit_arduino.ino'** and upload the file to your Arduino (I'm using MEGA 2560).  Make sure the robot and the simulation are in the same position (to set the simulation upright initially-- select "Upright" from "Select Goal States" in RVIZ.
 
@@ -53,6 +54,16 @@ Configuration for moveit, a motion planning framework that has a plugin in RVIZ,
 - **Use ```rostopic list``` and search for these topics to check if they are currently running**
 
 - **Use ```rostopic echo /<topic>``` to view the data on \<topic> in your terminal** 
+
+- If you get the following ```"error: moveo_moveit/ArmJointState.h: No such file or directory"```, perform the following steps in terminal:
+	```
+	cd <Arduino sketchbook>/libraries
+	rm -rf ros_lib 
+	rosrun rosserial_arduino make_libraries.py .
+	```
+	- More info on the ROS wiki: 
+		- Section 2.2 here: (http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup)
+		- (http://wiki.ros.org/rosserial/Tutorials/Adding%20Other%20Messages)
 	
 - Here is my current layout and wiring schematic for reference:
 ![aerialRobotSketch.pdf](/aerial_robot_sketch.png)
