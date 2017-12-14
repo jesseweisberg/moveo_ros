@@ -51,6 +51,10 @@ Configuration for moveit, a motion planning framework that has a plugin in RVIZ,
 	- **/joint\_steps\_feedback**: same as /joint_steps, except published back by arduino to check that information is being received by Arduino correctly 
 	- **/gripper\_angle**: current angle of the gripper
 
+- **To move Moveo from the command line:**
+	- ```rostopic pub joint_steps moveo_moveit/ArmJointState <Joint1 Joint2 Joint3 Joint4 Joint5 0>```  
+	- Change "Joint1, Joint2, etc." to the number of steps you want each joint to move.
+
 - **Use ```rostopic list``` and search for these topics to check if they are currently running**
 
 - **Use ```rostopic echo /<topic>``` to view the data on \<topic> in your terminal** 
