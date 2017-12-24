@@ -17,6 +17,7 @@
   #include <WProgram.h>
 #endif
 #include <ros.h>
+
 #include <moveo_moveit/ArmJointState.h>
 #include <Servo.h> 
 #include <std_msgs/Bool.h>
@@ -28,9 +29,9 @@
 #include <MultiStepper.h>
 
 // Joint 1
-#define E1_STEP_PIN 36
-#define E1_DIR_PIN 34
-#define E1_ENABLE_PIN 30
+#define E1_STEP_PIN        36
+#define E1_DIR_PIN         34
+#define E1_ENABLE_PIN      30
 
 // Joint 2
 #define Z_STEP_PIN         46
@@ -47,14 +48,14 @@
 #define Y_MAX_PIN          15
 
 // Joint 4
-#define X_STEP_PIN 54
-#define X_DIR_PIN 55
-#define X_ENABLE_PIN 38
+#define X_STEP_PIN         54
+#define X_DIR_PIN          55
+#define X_ENABLE_PIN       38
 
 // Joint 5 
-#define E0_STEP_PIN 26
-#define E0_DIR_PIN 28
-#define E0_ENABLE_PIN 24
+#define E0_STEP_PIN        26
+#define E0_DIR_PIN         28
+#define E0_ENABLE_PIN      24
 
 AccelStepper joint1(1,E1_STEP_PIN, E1_DIR_PIN);
 AccelStepper joint2(1,Z_STEP_PIN, Z_DIR_PIN);
@@ -63,8 +64,6 @@ AccelStepper joint4(1,X_STEP_PIN, X_DIR_PIN);
 AccelStepper joint5(1, E0_STEP_PIN, E0_DIR_PIN);
 
 Servo gripper;
-
-// Up to 10 steppers can be handled as a group by MultiStepper
 MultiStepper steppers;
 
 int joint_step[6];
@@ -74,26 +73,27 @@ ros::NodeHandle nh;
 std_msgs::Int16 msg;
 
 //instantiate publisher (for debugging purposes)
-ros::Publisher steps("joint_steps_feedback",&msg);
+//ros::Publisher steps("joint_steps_feedback",&msg);
 
 void arm_cb(const moveo_moveit::ArmJointState& arm_steps){
-  joint_status = 1; //
+  joint_status = 1;
   joint_step[0] = arm_steps.position1;
   joint_step[1] = arm_steps.position2;
   joint_step[2] = arm_steps.position3;
   joint_step[3] = arm_steps.position4;
   joint_step[4] = arm_steps.position5;
-  joint_step[5] = arm_steps.position6;
+  joint_step[5] = arm_steps.position6; //gripper position <0-180>
 }
 
 void gripper_cb( const std_msgs::UInt16& cmd_msg){
-  gripper.write(cmd_msg.data); //set servo angle, should be from 0-180  
-  digitalWrite(13, HIGH-digitalRead(13));  //toggle led  
+  gripper.write(cmd_msg.data); // Set servo angle, should be from 0-180  
+  digitalWrite(13, HIGH-digitalRead(13));  // Toggle led  
 }
 
 //instantiate subscribers
 ros::Subscriber<moveo_moveit::ArmJointState> arm_sub("joint_steps",arm_cb); //subscribes to joint_steps on arm
 ros::Subscriber<std_msgs::UInt16> gripper_sub("gripper_angle", gripper_cb); //subscribes to gripper position
+//to publish from terminal: rostopic pub gripper_angle std_msgs/UInt16 <0-180>
 
 void setup() {
   //put your setup code here, to run once:
@@ -104,7 +104,7 @@ void setup() {
   nh.initNode();
   nh.subscribe(arm_sub);
   nh.subscribe(gripper_sub);
-  nh.advertise(steps);
+  //nh.advertise(steps);
 
   // Configure each stepper
   joint1.setMaxSpeed(1500);
@@ -120,28 +120,30 @@ void setup() {
   steppers.addStepper(joint4);
   steppers.addStepper(joint5);
 
-  //configure gripper servo
+  // Configure gripper servo
   gripper.attach(11);
   
   digitalWrite(13, 1); //toggle led
 }
 
 void loop() {
-  if (joint_status == 1) // if command callback (arm_cb) is being called, execute stepper command
+  if (joint_status == 1) // If command callback (arm_cb) is being called, execute stepper command
   { 
     long positions[5];  // Array of desired stepper positions must be long
-    positions[0] = -joint_step[0]; // negated since the real robot rotates in the opposite direction as ROS
+    positions[0] = joint_step[0]; // negated since the real robot rotates in the opposite direction as ROS
     positions[1] = -joint_step[1]; 
     positions[2] = joint_step[2]; 
     positions[3] = joint_step[3]; 
     positions[4] = -joint_step[4]; 
 
-    //publish back to ros to check if everything's correct
-    msg.data=positions[4];
-    steps.publish(&msg);
+    // Publish back to ros to check if everything's correct
+    //msg.data=positions[4];
+    //steps.publish(&msg);
 
     steppers.moveTo(positions);
-    steppers.runSpeedToPosition(); // Blocks until all are in position       
+    nh.spinOnce();
+    steppers.runSpeedToPosition(); // Blocks until all are in position
+    gripper.write(joint_step[5]);  // move gripper after manipulator reaches goal   
   }
   digitalWrite(13, HIGH-digitalRead(13)); //toggle led
   joint_status = 0;

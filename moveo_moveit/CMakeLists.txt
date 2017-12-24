@@ -12,6 +12,9 @@ endif()
 
 find_package(catkin REQUIRED
   COMPONENTS
+    roscpp
+    rospy
+    std_msgs
     moveit_core
     moveit_ros_planning
     moveit_ros_planning_interface
@@ -63,6 +66,9 @@ add_executable(moveit_convert src/moveit_convert.cpp)
 add_executable(move_group_1 src/move_group_interface_coor_1.cpp)
 
 ## Specify libraries to link a library or executable target against
+catkin_install_python(PROGRAMS scripts/moveo_objrec_publisher.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 target_link_libraries(moveit_convert
   ${catkin_LIBRARIES}
 )
