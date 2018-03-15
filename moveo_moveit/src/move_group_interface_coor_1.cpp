@@ -124,7 +124,7 @@ int main(int argc, char **argv)
   moveit::planning_interface::MoveGroupInterface::Plan my_plan;
 
   moveit::planning_interface::MoveItErrorCode success = move_group.plan(my_plan);
-  
+
   ROS_INFO_NAMED("moveo", "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
 
   // Visualizing plans
