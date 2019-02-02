@@ -57,11 +57,11 @@
 #define E0_DIR_PIN         28
 #define E0_ENABLE_PIN      24
 
-AccelStepper joint1(1,E1_STEP_PIN, E1_DIR_PIN);
-AccelStepper joint2(1,Z_STEP_PIN, Z_DIR_PIN);
-AccelStepper joint3(1,Y_STEP_PIN, Y_DIR_PIN);
-AccelStepper joint4(1,X_STEP_PIN, X_DIR_PIN);
-AccelStepper joint5(1, E0_STEP_PIN, E0_DIR_PIN);
+AccelStepper joint1(AccelStepper::DRIVER, E1_STEP_PIN, E1_DIR_PIN);
+AccelStepper joint2(AccelStepper::DRIVER, Z_STEP_PIN, Z_DIR_PIN);
+AccelStepper joint3(AccelStepper::DRIVER, Y_STEP_PIN, Y_DIR_PIN);
+AccelStepper joint4(AccelStepper::DRIVER, X_STEP_PIN, X_DIR_PIN);
+AccelStepper joint5(AccelStepper::DRIVER, E0_STEP_PIN, E0_DIR_PIN);
 
 Servo gripper;
 MultiStepper steppers;
@@ -96,6 +96,34 @@ ros::Subscriber<std_msgs::UInt16> gripper_sub("gripper_angle", gripper_cb); //su
 //to publish from terminal: rostopic pub gripper_angle std_msgs/UInt16 <0-180>
 
 void setup() {
+  // Declare stepper control pins as outputs
+  pinMode(X_STEP_PIN, OUTPUT);
+  pinMode(X_DIR_PIN, OUTPUT);
+  pinMode(X_ENABLE_PIN, OUTPUT);
+
+  pinMode(Y_STEP_PIN, OUTPUT);
+  pinMode(Y_DIR_PIN, OUTPUT);
+  pinMode(Y_ENABLE_PIN, OUTPUT);
+
+  pinMode(Z_STEP_PIN, OUTPUT);
+  pinMode(Z_DIR_PIN, OUTPUT);
+  pinMode(Z_ENABLE_PIN, OUTPUT);
+
+  pinMode(E0_STEP_PIN, OUTPUT);
+  pinMode(E0_DIR_PIN, OUTPUT);
+  pinMode(E0_ENABLE_PIN, OUTPUT);
+
+  pinMode(E1_STEP_PIN, OUTPUT);
+  pinMode(E1_DIR_PIN, OUTPUT);
+  pinMode(E1_ENABLE_PIN, OUTPUT);
+
+  // Set enable pins with LOW value
+  digitalWrite(X_ENABLE_PIN, LOW);
+  digitalWrite(Y_ENABLE_PIN, LOW);
+  digitalWrite(Z_ENABLE_PIN, LOW);
+  digitalWrite(E0_ENABLE_PIN, LOW);
+  digitalWrite(E1_ENABLE_PIN, LOW);
+  
   //put your setup code here, to run once:
   //Serial.begin(57600);
   pinMode(13,OUTPUT);
