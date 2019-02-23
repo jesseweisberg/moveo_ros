@@ -7,9 +7,9 @@
 #include <MultiStepper.h>
 
 // Joint 1
-#define E1_STEP_PIN 36
-#define E1_DIR_PIN 34
-#define E1_ENABLE_PIN 30
+#define E1_STEP_PIN       36
+#define E1_DIR_PIN        34
+#define E1_ENABLE_PIN     30
 
 // Joint 2
 #define Z_STEP_PIN         46
@@ -26,23 +26,23 @@
 #define Y_MAX_PIN          15
 
 // Joint 4
-#define X_STEP_PIN 54
-#define X_DIR_PIN 55
-#define X_ENABLE_PIN 38
+#define X_STEP_PIN        54
+#define X_DIR_PIN         55
+#define X_ENABLE_PIN      38
 
 // Joint 5 
-#define E0_STEP_PIN 26
-#define E0_DIR_PIN 28
-#define E0_ENABLE_PIN 24
+#define E0_STEP_PIN       26
+#define E0_DIR_PIN        28
+#define E0_ENABLE_PIN     24
 
 
 // EG X-Y position bed driven by 2 steppers
 // Alas its not possible to build an array of these with different pins for each :-(
-AccelStepper joint1(1,E1_STEP_PIN, E1_DIR_PIN);
-AccelStepper joint2(1,Z_STEP_PIN, Z_DIR_PIN);
-AccelStepper joint3(1,Y_STEP_PIN, Y_DIR_PIN);
-AccelStepper joint4(1,X_STEP_PIN, X_DIR_PIN);
-AccelStepper joint5(1, E0_STEP_PIN, E0_DIR_PIN);
+AccelStepper joint1(AccelStepper::DRIVER, E1_STEP_PIN, E1_DIR_PIN);
+AccelStepper joint2(AccelStepper::DRIVER, Z_STEP_PIN, Z_DIR_PIN);
+AccelStepper joint3(AccelStepper::DRIVER, Y_STEP_PIN, Y_DIR_PIN);
+AccelStepper joint4(AccelStepper::DRIVER, X_STEP_PIN, X_DIR_PIN);
+AccelStepper joint5(AccelStepper::DRIVER, E0_STEP_PIN, E0_DIR_PIN);
 
 // Up to 10 steppers can be handled as a group by MultiStepper
 MultiStepper steppers;
@@ -51,7 +51,21 @@ MultiStepper steppers;
 unsigned int x = 1000;
 
 void setup() {
-  Serial.begin(250000);
+  Serial.begin(115200);
+
+  // Declare enable pins as outputs
+  pinMode(X_ENABLE_PIN, OUTPUT);
+  pinMode(Y_ENABLE_PIN, OUTPUT);
+  pinMode(Z_ENABLE_PIN, OUTPUT);
+  pinMode(E0_ENABLE_PIN, OUTPUT);
+  pinMode(E1_ENABLE_PIN, OUTPUT);
+
+  // Set enable pins with LOW value
+  digitalWrite(X_ENABLE_PIN, LOW);
+  digitalWrite(Y_ENABLE_PIN, LOW);
+  digitalWrite(Z_ENABLE_PIN, LOW);
+  digitalWrite(E0_ENABLE_PIN, LOW);
+  digitalWrite(E1_ENABLE_PIN, LOW);
 
   // Configure each stepper
   joint1.setMaxSpeed(1500);
