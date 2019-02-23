@@ -1,0 +1,13 @@
+<launch>
+	<arg name="port" default="/dev/ttyACM0"/>
+
+	<!-- RVIZ with Moveit plugin -->
+	<include file="$(find moveo_moveit_config)/launch/demo.launch"/>
+	<!-- rosserial node that communicates with Arduino -->
+	<node pkg="rosserial_python" type="serial_node.py" name="arduino_rosserial" 
+		  args="$(arg port)" output="screen" required="true"/>
+	<!-- converts simulation joint_state rotations to steps and publishes 
+		 on the /joint_steps topic -->
+	<node pkg="moveo_moveit" type="moveit_convert" name="moveit_convert" 
+		  output="screen" required="true"/>
+</launch>
