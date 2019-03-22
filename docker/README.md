@@ -1,8 +1,5 @@
 # Docker image for Kinetic
 
-If you are using 18.04 and you want to use ROS Kinetic with openGL aplications and nvidia graphics carg, you can use this image.
-
-
 ## How to install docker-nvidia2
 
 Add nvidia docker repository as it is explained [here](https://nvidia.github.io/nvidia-docker/).
