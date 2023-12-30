@@ -66,10 +66,13 @@ Configuration for moveit, a motion planning framework that has a plugin in RVIZ,
 
 - If you get the following ```"error: moveo_moveit/ArmJointState.h: No such file or directory"```, perform the following steps in terminal:
 	```
+	cd <moveo_ros workspace>
+	source devel/setup.bash
 	cd <Arduino sketchbook>/libraries
 	rm -rf ros_lib 
 	rosrun rosserial_arduino make_libraries.py .
 	```
+	ensure that ```moveo_moveit``` package is available in ```<Arduino sketchbook>/libraries``` folder.
 	- More info on the ROS wiki: 
 		- Section 2.2 here: (http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup)
 		- (http://wiki.ros.org/rosserial/Tutorials/Adding%20Other%20Messages)
